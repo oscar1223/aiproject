@@ -14,18 +14,50 @@ export default function Chatbot() {
     { id: 1, text: "¡Hola! ¿En qué puedo ayudarte hoy?", sender: 'bot' }
   ])
   const [input, setInput] = useState('')
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (input.trim()) {
       const newMessage: Message = { id: messages.length + 1, text: input, sender: 'user' }
       setMessages([...messages, newMessage])
       setInput('')
       
       // Simular respuesta del bot
-      setTimeout(() => {
-        const botResponse: Message = { id: messages.length + 2, text: "Gracias por tu mensaje. Estoy procesando tu solicitud.", sender: 'bot' }
-        setMessages(prevMessages => [...prevMessages, botResponse])
-      }, 1000)
+      //setTimeout(() => {
+      //  const botResponse: Message = { id: messages.length + 2, text: "Gracias por tu mensaje. Estoy procesando tu solicitud.", sender: 'bot' }
+      //  setMessages(prevMessages => [...prevMessages, botResponse])
+      //}, 1000)
+      try {
+        // Envia solicitud al bot
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({message: input}),
+        });
+
+        const data = await response.json();
+
+        const botMessage: Message = {
+          id: messages.length + 2,
+          text: 'Lo siento, ocurrió un error al procesar tu solicitud.',
+          sender: 'bot',
+
+        };
+        setMessages((prevMessages) => [...prevMessages, botMessage]);
+      
+        
+      } catch (error) {
+        console.error('Error al obtener la respuesta del bot:', error);
+        const errorMessage: Message = {
+          id: messages.length + 2,
+          text: 'Lo siento, ocurrió un error al procesar tu solicitud.',
+          sender: 'bot',
+        };
+        setMessages((prevMessages) => [...prevMessages, errorMessage]);
+        
+      } finally{
+        setIsLoading(false);
+      }
     }
   }
 
@@ -47,6 +79,18 @@ export default function Chatbot() {
             </div>
           </div>
         ))}
+        {isLoading &&(
+          <div className="flex justify-start">
+            <div className="flex items-end">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center text-white bg-gray-500">
+                B
+              </div>
+              <div className="max-w-xs px-4 py-2 rounded-lg bg-gray-200 text-gray-800 rounded-bl-none mr-2">
+                Escribiendo...
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       <div className="bg-gray-100 p-4 border-t border-gray-200 text-black">
         <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="flex space-x-2">
@@ -56,6 +100,7 @@ export default function Chatbot() {
             value={input} 
             onChange={(e) => setInput(e.target.value)}
             className="flex-grow px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            disabled={isLoading}
           />
           <button 
             type="submit" 

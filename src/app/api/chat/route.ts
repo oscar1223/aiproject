@@ -9,12 +9,13 @@ export async function POST(request: NextRequest) {
 
   const llm = new ChatOpenAI({
     openAIApiKey: '',
-    model: "gpt-4o-mini",
+    modelName: "gpt-4",
     temperature:0,
 })
 
   try {
     const response = await llm.invoke([{role: "user", content: message }]);
+    console.log(message)
     return NextResponse.json({ text: response });
   } catch (error) {
     console.error(error);
