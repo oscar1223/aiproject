@@ -11,7 +11,7 @@ interface Message {
 
 export default function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([
-    { id: 1, text: "¡Hola! ¿En qué puedo ayudarte hoy?", sender: 'bot' }
+    { id: 1, text: "Bienvenido al XIN, el chat especializado en cultura Japonesa, ¿en que puedo ayudarte?", sender: 'bot' }
   ])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false);
@@ -19,8 +19,9 @@ export default function Chatbot() {
   const handleSend = async () => {
     if (input.trim()) {
       const newMessage: Message = { id: messages.length + 1, text: input, sender: 'user' }
-      setMessages([...messages, newMessage])
+      setMessages(prevMessages =>[...messages, newMessage])
       setInput('')
+      setIsLoading(true)
       
       // Simular respuesta del bot
       //setTimeout(() => {
@@ -28,6 +29,7 @@ export default function Chatbot() {
       //  setMessages(prevMessages => [...prevMessages, botResponse])
       //}, 1000)
       try {
+
         // Envia solicitud al bot
         const response = await fetch('/api/chat', {
           method: 'POST',
@@ -35,11 +37,16 @@ export default function Chatbot() {
           body: JSON.stringify({message: input}),
         });
 
+        if (!response.ok) {
+          throw new Error(`Error en la respuesta de la API: ${response.statusText}`);
+        }
+
         const data = await response.json();
+        console.log(data)
 
         const botMessage: Message = {
           id: messages.length + 2,
-          text: 'Lo siento, ocurrió un error al procesar tu solicitud.',
+          text: data.text,
           sender: 'bot',
 
         };
@@ -70,10 +77,10 @@ export default function Chatbot() {
         {messages.map((message) => (
           <div key={message.id} className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`flex items-end ${message.sender === 'user' ? 'flex-row-reverse' : ''}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white ${message.sender === 'user' ? 'bg-blue-500' : 'bg-gray-500'}`}>
-                {message.sender === 'user' ? 'U' : 'B'}
+              <div className={`w-8 h-8 rounded-full flex mr-1 ml-1 items-center justify-center text-white ${message.sender === 'user' ? 'bg-blue-500' : 'bg-gray-500'}`}>
+                {message.sender === 'user' ? 'U' : 'X'}
               </div>
-              <div className={`max-w-xs px-4 py-2 rounded-lg ${message.sender === 'user' ? 'bg-blue-500 text-white rounded-br-none ml-2' : 'bg-gray-200 text-gray-800 rounded-bl-none mr-2'}`}>
+              <div className={`max-w-xs px-4 py-2  rounded-lg ${message.sender === 'user' ? 'bg-blue-500 text-white rounded-br-none ml-2' : 'bg-gray-200 text-gray-800 rounded-bl-none mr-2'}`}>
                 {message.text}
               </div>
             </div>
@@ -83,9 +90,9 @@ export default function Chatbot() {
           <div className="flex justify-start">
             <div className="flex items-end">
               <div className="w-8 h-8 rounded-full flex items-center justify-center text-white bg-gray-500">
-                B
+                X
               </div>
-              <div className="max-w-xs px-4 py-2 rounded-lg bg-gray-200 text-gray-800 rounded-bl-none mr-2">
+              <div className="max-w-xs px-4 py-2 mr-2 rounded-lg bg-gray-200 text-gray-800 rounded-bl-none mr-2">
                 Escribiendo...
               </div>
             </div>
