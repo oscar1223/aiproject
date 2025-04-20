@@ -9,7 +9,7 @@ export default function Header() {
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
         <Link to="/" className="text-3xl font-bold text-blue-600 tracking-tight">
-          ChatPDF
+          WENXANGPT
         </Link>
 
         <nav className="flex items-center gap-3">
