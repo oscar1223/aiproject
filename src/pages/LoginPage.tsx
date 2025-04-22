@@ -1,4 +1,3 @@
-import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate, Link } from 'react-router-dom'
 
@@ -15,7 +14,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex justify-center items-center py-12">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 text-black">
         <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
@@ -43,7 +42,7 @@ export default function LoginPage() {
             Login
           </button>
         </form>
-        <p className="mt-4 text-center text-sm">
+        <p className="mt-4 text-center text-sm text-blue-600">
           ¿No tienes cuenta?{' '}
           <Link to="/register" className="text-blue-600 hover:underline">
             Regístrate

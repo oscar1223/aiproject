@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 export default function Header() {
@@ -9,7 +8,7 @@ export default function Header() {
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
         <Link to="/" className="text-3xl font-bold text-blue-600 tracking-tight">
-          WENXANGPT
+          ChatPDF
         </Link>
 
         <nav className="flex items-center gap-3">

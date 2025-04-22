@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Send } from 'lucide-react'
 
 export interface Message { id: number; text: string; sender: 'user' | 'bot' }
