@@ -51,24 +51,25 @@ a {
   transition: color 0.2s ease;
 }
 a:hover {
-  color: #2563eb;
+  color: #efeff0;
 }
 
 p {
   margin-bottom: 1rem;
   font-size: 1rem;
-  color: var(--color-text);
+  color: #111827;
 }
 
 button {
   padding: 0.5rem 1rem;
-  background-color: var(--color-accent);
+  background-color: var(--color-text);
   color: white;
   border-radius: 0.75rem;
   border: none;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  
 }
+
 button:hover {
   background-color: #2563eb;
 }
@@ -80,6 +81,7 @@ input, textarea, select {
   border-radius: 0.5rem;
   font-size: 1rem;
   transition: box-shadow 0.2s ease;
+  color: #111827;
 }
 input:focus, textarea:focus, select:focus {
   outline: none;
@@ -138,6 +140,7 @@ blockquote {
 
   a:hover {
     color: #93c5fd;
+
   }
 
   input, textarea, select {

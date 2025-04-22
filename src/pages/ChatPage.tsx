@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import Chatbot, { Message } from '../components/Chatbot'
+import { useState } from 'react'
+import Chatbot from '../components/Chatbot'
 import PDFUpload, { UploadedPDF } from '../components/PDFUpload'
 
 export default function ChatPage() {

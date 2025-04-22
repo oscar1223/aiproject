@@ -1,4 +1,3 @@
-import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate, Link } from 'react-router-dom'
 
@@ -9,9 +8,30 @@ export default function RegisterPage() {
   const navigate = useNavigate()
 
   const onSubmit = async (data: RegisterForm) => {
-    console.log('Registering', data)
-    navigate('/login')
-  }
+    try {
+      const res = await fetch("http://localhost:8000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: data.email,
+          password: data.password,
+        }),
+      });
+  
+      const result = await res.json();
+  
+      if (res.ok) {
+        alert("Registro exitoso");
+        navigate("/login");
+      } else {
+        alert(result.error || "Error al registrar");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error de red");
+    }
+  };
+  
 
   return (
     <div className="flex justify-center items-center py-12">

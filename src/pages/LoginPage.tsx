@@ -8,9 +8,30 @@ export default function LoginPage() {
   const navigate = useNavigate()
 
   const onSubmit = async (data: LoginForm) => {
-    console.log('Logging in', data)
-    navigate('/chat')
-  }
+    try {
+      const res = await fetch("http://localhost:8000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: data.email,
+          password: data.password,
+        }),
+      });
+  
+      const result = await res.json();
+  
+      if (res.ok) {
+        localStorage.setItem("token", result.token);
+        navigate("/chat");
+      } else {
+        alert(result.error || "Error al iniciar sesión");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error de red");
+    }
+  };
+  
 
   return (
     <div className="flex justify-center items-center py-12">
@@ -42,8 +63,8 @@ export default function LoginPage() {
             Login
           </button>
         </form>
-        <p className="mt-4 text-center text-sm text-blue-600">
-          ¿No tienes cuenta?{' '}
+        <p className="mb-1 text-center text-sm text-blue-600">
+          ¿No tienes cuenta?{''}
           <Link to="/register" className="text-blue-600 hover:underline">
             Regístrate
           </Link>

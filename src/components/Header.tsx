@@ -1,7 +1,6 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link} from 'react-router-dom'
 
 export default function Header() {
-  const navigate = useNavigate()
   const isLoggedIn = false // TODO: estado real
 
   return (
@@ -15,7 +14,7 @@ export default function Header() {
           {isLoggedIn ? (
             <button
               onClick={() => {}}
-              className="px-4 py-2 rounded-xl bg-red-500 text-white text-sm font-medium shadow hover:bg-red-600 transition-colors"
+              className="px-4 py-2 rounded-xl bg-red-500 !text-white text-sm font-medium shadow hover:bg-red-600 transition-colors"
             >
               Logout
             </button>
@@ -23,13 +22,13 @@ export default function Header() {
             <>
               <Link
                 to="/login"
-                className="px-4 py-2 rounded-xl bg-blue-500 text-white text-sm font-medium shadow hover:bg-blue-600 transition-colors"
+                className="px-4 py-2 rounded-xl bg-blue-500 !text-white text-sm font-medium shadow hover:bg-blue-600 transition-colors"
               >
                 Login
               </Link>
               <Link
                 to="/register"
-                className="px-4 py-2 rounded-xl bg-gray-100 text-gray-900 text-sm font-medium border border-gray-300 hover:bg-gray-200 transition-colors"
+                className="px-4 py-2 rounded-xl bg-blue-400 !text-white text-sm font-medium shadow hover:bg-blue-400 transition-colors"
               >
                 Register
               </Link>
